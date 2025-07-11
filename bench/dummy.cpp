@@ -1,10 +1,13 @@
 #include <benchmark/benchmark.h>
 
-#include "utils.hpp"
+#include "dev/utils.hpp"
 
 static void bench0(benchmark::State &state) {
   for (auto _ : state) {
-    auto d = bu::make_unif_vect<int>(100, 0, 100);
+    auto r = utils::make_unif_range(10, 0, 100);
+    for (auto v : r) {
+      benchmark::DoNotOptimize(v); // Prevent optimization of the loop
+    }
   }
 }
 BENCHMARK(bench0);
